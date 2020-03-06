@@ -17,48 +17,51 @@ void main() {
     mockHeroInfoRepository = MockHeroInfoRepository();
     usecase = GetListOfHeroes(mockHeroInfoRepository);
   });
-  final tHeroId = 70;
-  final tHero = Hero(
-    response: 'success',
-    id: 70,
-    name: 'Batman',
-    imageUrl: 'httpss://www.superherodb.com/pictures2/portraits/10/100/639.jpg',
-    appearance: Appearance(
-        eyeColor: 'blue',
-        hairColor: 'black',
-        race: 'Human',
-        gender: 'Male',
-        height: [
-          "210 lb",
-          "95 kg",
-        ],
-        weight: [
-          "6'2",
-          "188 cm",
-        ]),
-    powerstats: Powerstats(
-      intelligence: 100,
-      power: 47,
-      speed: 27,
-      strength: 26,
-      combat: 100,
-      durability: 50,
+
+  final tHeroes = [
+    Hero(
+      response: 'success',
+      id: 70,
+      name: 'Batman',
+      imageUrl:
+          'httpss://www.superherodb.com/pictures2/portraits/10/100/639.jpg',
+      appearance: Appearance(
+          eyeColor: 'blue',
+          hairColor: 'black',
+          race: 'Human',
+          gender: 'Male',
+          height: [
+            "210 lb",
+            "95 kg",
+          ],
+          weight: [
+            "6'2",
+            "188 cm",
+          ]),
+      powerstats: Powerstats(
+        intelligence: 100,
+        power: 47,
+        speed: 27,
+        strength: 26,
+        combat: 100,
+        durability: 50,
+      ),
     ),
-  );
+  ];
   test(
     'should get a list of heroes from the repository',
     () async {
       // "On the fly" implementation of the Repository using the Mockito package.
       // When getConcreteNumberTrivia is called with any argument, always answer with
       // the Right "side" of Either containing a test NumberTrivia object.
-      when(mockHeroInfoRepository.getHero(any))
-          .thenAnswer((_) async => Right(tHero));
-      final result = await usecase(heroId: tHeroId);
+      when(mockHeroInfoRepository.listHeroes())
+          .thenAnswer((_) async => Right(tHeroes));
+      final result = await usecase(NoParams());
       // The "act" phase of the test. Call the not-yet-existent method.
       // UseCase should simply return whatever was returned from the Repository
-      expect(result, Right(tHero));
+      expect(result, Right(tHeroes));
       // Verify that the method has been called on the Repository
-      verify(mockHeroInfoRepository.getHero(tHeroId));
+      verify(mockHeroInfoRepository.listHeroes());
       // Only the above method should be called and nothing more.
       verifyNoMoreInteractions(mockHeroInfoRepository);
     },
