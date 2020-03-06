@@ -9,7 +9,7 @@ class GetListOfHeroes {
 
   GetListOfHeroes(this.repository);
 
-  Future<Either<Failure, Hero>> execute({@required int heroId}) async {
+  Future<Either<Failure, Hero>> call({@required int heroId}) async {
     return await repository.getHero(heroId);
   }
 }

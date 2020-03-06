@@ -53,7 +53,7 @@ void main() {
       // the Right "side" of Either containing a test NumberTrivia object.
       when(mockHeroInfoRepository.getHero(any))
           .thenAnswer((_) async => Right(tHero));
-      final result = await usecase.execute(heroId: tHeroId);
+      final result = await usecase(heroId: tHeroId);
       // The "act" phase of the test. Call the not-yet-existent method.
       // UseCase should simply return whatever was returned from the Repository
       expect(result, Right(tHero));
