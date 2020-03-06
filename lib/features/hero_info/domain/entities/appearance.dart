@@ -16,5 +16,12 @@ class Appearance extends Equatable {
     @required this.weight,
     @required this.eyeColor,
     @required this.hairColor,
-  });
+  }) : super([
+          gender,
+          race,
+          height,
+          weight,
+          eyeColor,
+          hairColor,
+        ]);
 }

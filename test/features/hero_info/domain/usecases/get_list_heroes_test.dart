@@ -48,6 +48,7 @@ void main() {
       ),
     ),
   ];
+
   test(
     'should get a list of heroes from the repository',
     () async {
