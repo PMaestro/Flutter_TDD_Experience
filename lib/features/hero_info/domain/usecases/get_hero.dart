@@ -16,7 +16,7 @@ class GetHeroById implements UseCase<Hero, Params> {
 }
 
 class Params extends Equatable {
-  final int heroId;
+  final String heroId;
 
   Params({this.heroId}) : super([heroId]);
 }

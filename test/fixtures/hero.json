@@ -1,0 +1,28 @@
+{
+  "response": "success",
+  "id": "70",
+  "name": "Batman",
+  "powerstats": {
+    "intelligence": "100",
+    "strength": "26",
+    "speed": "27",
+    "durability": "50",
+    "power": "47",
+    "combat": "100"
+  },
+  "appearance": {
+    "gender": "Male",
+    "race": "Human",
+    "height": [
+      "6'2",
+      "188 cm"
+    ],
+    "weight": [
+      "210 lb",
+      "95 kg"
+    ],
+    "eye-color": "blue",
+    "hair-color": "black"
+  },
+  "imageUrl": "https:\/\/www.superherodb.com\/pictures2\/portraits\/10\/100\/639.jpg"
+}

@@ -21,7 +21,7 @@ void main() {
   final tHeroes = [
     Hero(
       response: 'success',
-      id: 70,
+      id: '70',
       name: 'Batman',
       imageUrl:
           'httpss://www.superherodb.com/pictures2/portraits/10/100/639.jpg',
@@ -38,13 +38,13 @@ void main() {
             "6'2",
             "188 cm",
           ]),
-      powerstats: Powerstats(
-        intelligence: 100,
-        power: 47,
-        speed: 27,
-        strength: 26,
-        combat: 100,
-        durability: 50,
+      powerstats: PowerStats(
+        intelligence: '100',
+        power: '47',
+        speed: '27',
+        strength: '26',
+        combat: '100',
+        durability: '50',
       ),
     ),
   ];

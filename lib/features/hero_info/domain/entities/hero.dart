@@ -8,9 +8,9 @@ import 'package:tdd_studing/features/hero_info/domain/entities/power_stats.dart'
 /// https://superheroapi.com/api/2983597721691728/character-id
 class Hero extends Equatable {
   final String response;
-  final int id;
+  final String id;
   final String name;
-  final Powerstats powerstats;
+  final PowerStats powerstats;
   final Appearance appearance;
   //todo find a way to get just the url from a simple query
   final String imageUrl;

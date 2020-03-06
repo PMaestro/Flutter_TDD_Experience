@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class Powerstats extends Equatable {
-  final int intelligence;
-  final int strength;
-  final int speed;
-  final int durability;
-  final int power;
-  final int combat;
+class PowerStats extends Equatable {
+  final String intelligence;
+  final String strength;
+  final String speed;
+  final String durability;
+  final String power;
+  final String combat;
 
-  Powerstats({
+  PowerStats({
     @required this.intelligence,
     @required this.strength,
     @required this.speed,

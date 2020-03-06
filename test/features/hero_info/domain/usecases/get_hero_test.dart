@@ -17,10 +17,10 @@ void main() {
     mockHeroInfoRepository = MockHeroInfoRepository();
     usecase = GetHeroById(mockHeroInfoRepository);
   });
-  final tHeroId = 70;
+  final tHeroId = '70';
   final tHero = Hero(
     response: 'success',
-    id: 70,
+    id: '70',
     name: 'Batman',
     imageUrl: 'httpss://www.superherodb.com/pictures2/portraits/10/100/639.jpg',
     appearance: Appearance(
@@ -36,13 +36,13 @@ void main() {
           "6'2",
           "188 cm",
         ]),
-    powerstats: Powerstats(
-      intelligence: 100,
-      power: 47,
-      speed: 27,
-      strength: 26,
-      combat: 100,
-      durability: 50,
+    powerstats: PowerStats(
+      intelligence: '100',
+      power: '47',
+      speed: '27',
+      strength: '26',
+      combat: '100',
+      durability: '50',
     ),
   );
   test(
