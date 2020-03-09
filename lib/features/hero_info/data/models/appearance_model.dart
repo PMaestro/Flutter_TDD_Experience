@@ -31,4 +31,16 @@ class AppearanceModel extends Appearance {
       hairColor: json['hair-color'],
     );
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'gender': gender,
+      'race': race,
+      'height': height,
+      'weight': weight,
+      'eye-color': eyeColor,
+      'hair-color': hairColor,
+    };
+  }
 }

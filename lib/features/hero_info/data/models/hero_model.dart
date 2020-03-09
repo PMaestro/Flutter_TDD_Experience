@@ -20,7 +20,7 @@ class HeroModel extends Hero {
           response: response,
           id: id,
           name: name,
-          powerstats: powerStats,
+          powerStats: powerStats,
           appearance: appearance,
           imageUrl: imageUrl,
         );
@@ -39,5 +39,17 @@ class HeroModel extends Hero {
           : null,
       imageUrl: json['imageUrl'],
     );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'response': response,
+      'id': id,
+      'name': name,
+      'powerstats': powerStats.toJson(),
+      'appearance': appearance.toJson(),
+      'imageUrl': imageUrl,
+    };
   }
 }
