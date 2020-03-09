@@ -32,7 +32,7 @@ class HeroInfoRepositoryImpl implements HeroInfoRepository {
     } else {
       try {
         final localHero = await localDataSource.getLastHero();
-        Right(localHero);
+        return Right(localHero);
       } on CacheException {
         return Left(CacheFailure());
       }

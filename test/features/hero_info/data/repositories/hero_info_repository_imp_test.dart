@@ -132,32 +132,32 @@ void main() {
     group('device is offline', () {
       setUp(() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+      });
 
-        test(
-            'should return last locally cached data when the cached data is presented',
-            () async {
-          //arrange
-          when(mockLocalDataSource.getLastHero())
-              .thenAnswer((_) async => tHeroModel);
-          //act
-          final result = await repository.getHero(tId);
-          //assert
-          verifyZeroInteractions(mockRemoteDataSource);
-          verify(mockLocalDataSource.getLastHero());
-          expect(result, equals(Right(tHeroModel)));
-        });
+      test(
+          'should return last locally cached data when the cached data is presented',
+          () async {
+        //arrange
+        when(mockLocalDataSource.getLastHero())
+            .thenAnswer((_) async => tHeroModel);
+        //act
+        final result = await repository.getHero(tId);
+        //assert
+        verifyZeroInteractions(mockRemoteDataSource);
+        verify(mockLocalDataSource.getLastHero());
+        expect(result, equals(Right(tHeroModel)));
+      });
 
-        test('should return cachFailure when there is no cached data present',
-            () async {
-          //arrange
-          when(mockLocalDataSource.getLastHero()).thenThrow(CacheException);
-          //act
-          final result = await repository.getHero(tId);
-          //assert
-          verifyZeroInteractions(mockRemoteDataSource);
-          verify(mockLocalDataSource.getLastHero());
-          expect(result, equals(Left(CacheFailure)));
-        });
+      test('should return cachFailure when there is no cached data present',
+          () async {
+        //arrange
+        when(mockLocalDataSource.getLastHero()).thenThrow(CacheException);
+        //act
+        final result = await repository.getHero(tId);
+        //assert
+        verifyZeroInteractions(mockRemoteDataSource);
+        verify(mockLocalDataSource.getLastHero());
+        expect(result, equals(Left(CacheFailure())));
       });
     });
   });
