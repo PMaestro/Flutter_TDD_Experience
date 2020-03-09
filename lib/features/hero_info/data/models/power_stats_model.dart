@@ -33,4 +33,16 @@ class PowerStatsModel extends PowerStats {
       combat: json['combat'],
     );
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'intelligence': intelligence,
+      'strength': strength,
+      'speed': speed,
+      'durability': durability,
+      'power': power,
+      'combat': combat,
+    };
+  }
 }

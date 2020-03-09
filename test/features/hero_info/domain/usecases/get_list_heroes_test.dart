@@ -38,7 +38,7 @@ void main() {
             "6'2",
             "188 cm",
           ]),
-      powerstats: PowerStats(
+      powerStats: PowerStats(
         intelligence: '100',
         power: '47',
         speed: '27',

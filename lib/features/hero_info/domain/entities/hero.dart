@@ -10,7 +10,7 @@ class Hero extends Equatable {
   final String response;
   final String id;
   final String name;
-  final PowerStats powerstats;
+  final PowerStats powerStats;
   final Appearance appearance;
   //todo find a way to get just the url from a simple query
   final String imageUrl;
@@ -19,15 +19,17 @@ class Hero extends Equatable {
     @required this.response,
     @required this.id,
     @required this.name,
-    @required this.powerstats,
+    @required this.powerStats,
     @required this.appearance,
     @required this.imageUrl,
   }) : super([
           response,
           id,
           name,
-          powerstats,
+          powerStats,
           appearance,
           imageUrl,
         ]);
+
+  toJson() {}
 }

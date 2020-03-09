@@ -13,20 +13,14 @@ void main() {
     response: 'success',
     id: "70",
     name: 'Batman',
-    imageUrl: 'httpss://www.superherodb.com/pictures2/portraits/10/100/639.jpg',
+    imageUrl: 'https://www.superherodb.com/pictures2/portraits/10/100/639.jpg',
     appearance: AppearanceModel(
         eyeColor: 'blue',
         hairColor: 'black',
         race: 'Human',
         gender: 'Male',
-        height: [
-          "210 lb",
-          "95 kg",
-        ],
-        weight: [
-          "6'2",
-          "188 cm",
-        ]),
+        height: ["6'2", "188 cm"],
+        weight: ["210 lb", "95 kg"]),
     powerStats: PowerStatsModel(
       intelligence: '100',
       power: '47',
@@ -58,7 +52,44 @@ void main() {
       //act
       final result = HeroModel.fromJson(jsonMap);
       //assert
+
       expect(result, tHeroModel);
+    });
+  });
+
+  group('toJson', () {
+    test(
+        'should return a JSON map containing an Hero with powerStats and Appearence',
+        () async {
+      //act
+      final result = tHeroModel.toJson();
+
+      //assert
+      final expectMap = {
+        "response": "success",
+        "id": "70",
+        "name": "Batman",
+        "powerstats": {
+          "intelligence": "100",
+          "strength": "26",
+          "speed": "27",
+          "durability": "50",
+          "power": "47",
+          "combat": "100"
+        },
+        "appearance": {
+          "gender": "Male",
+          "race": "Human",
+          "height": ["6'2", "188 cm"],
+          "weight": ["210 lb", "95 kg"],
+          "eye-color": "blue",
+          "hair-color": "black"
+        },
+        "imageUrl":
+            "https:\/\/www.superherodb.com\/pictures2\/portraits\/10\/100\/639.jpg"
+      };
+
+      expect(result, expectMap);
     });
   });
 }

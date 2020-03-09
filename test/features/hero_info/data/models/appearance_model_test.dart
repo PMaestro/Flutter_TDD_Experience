@@ -17,6 +17,7 @@ void main() {
       "188 cm",
     ],
   );
+
   test(
     'should be a subclass of Hero entity',
     () async {

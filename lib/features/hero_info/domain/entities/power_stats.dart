@@ -24,4 +24,6 @@ class PowerStats extends Equatable {
           power,
           combat,
         ]);
+
+  toJson() {}
 }

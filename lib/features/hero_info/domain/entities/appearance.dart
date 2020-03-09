@@ -24,4 +24,6 @@ class Appearance extends Equatable {
           eyeColor,
           hairColor,
         ]);
+
+  toJson() {}
 }
