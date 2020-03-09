@@ -32,7 +32,7 @@ class HeroInfoRepositoryImpl implements HeroInfoRepository {
     } else {
       try {
         final localHero = await localDataSource.getLastHero();
-        Right(localHero);
+        return Right(localHero);
       } on CacheException {
         return Left(CacheFailure());
       }
@@ -40,7 +40,7 @@ class HeroInfoRepositoryImpl implements HeroInfoRepository {
   }
 
   @override
-  Future<Either<Failure, List<Hero>>> listHeroes() {
+  Future<Either<Failure, Hero>> getRandomHero() {
     // TODO: implement listHeroes
     return null;
   }

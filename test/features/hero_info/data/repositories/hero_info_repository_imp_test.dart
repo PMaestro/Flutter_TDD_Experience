@@ -38,6 +38,24 @@ void main() {
     );
   });
 
+  void runTestOnline(Function body) {
+    group('device is online', () {
+      setUp(() {
+        when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      });
+      body();
+    });
+  }
+
+  void runTestOffline(Function body) {
+    group('device is offline', () {
+      setUp(() {
+        when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+      });
+      body();
+    });
+  }
+
   group('getHeroInfo', () {
     final tId = '70';
 
@@ -72,19 +90,7 @@ void main() {
 
     final Hero tHero = tHeroModel;
 
-    test('should check if the device is online', () async {
-      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-
-      repository.getHero(tId);
-
-      verify(mockNetworkInfo.isConnected);
-    });
-
-    group('device is online', () {
-      setUp(() {
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-      });
-
+    runTestOnline(() {
       test(
           'should return remote data when the call to remote data source is successeful',
           () async {
@@ -129,35 +135,31 @@ void main() {
       });
     });
 
-    group('device is offline', () {
-      setUp(() {
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+    runTestOffline(() {
+      test(
+          'should return last locally cached data when the cached data is presented',
+          () async {
+        //arrange
+        when(mockLocalDataSource.getLastHero())
+            .thenAnswer((_) async => tHeroModel);
+        //act
+        final result = await repository.getHero(tId);
+        //assert
+        verifyZeroInteractions(mockRemoteDataSource);
+        verify(mockLocalDataSource.getLastHero());
+        expect(result, equals(Right(tHeroModel)));
+      });
 
-        test(
-            'should return last locally cached data when the cached data is presented',
-            () async {
-          //arrange
-          when(mockLocalDataSource.getLastHero())
-              .thenAnswer((_) async => tHeroModel);
-          //act
-          final result = await repository.getHero(tId);
-          //assert
-          verifyZeroInteractions(mockRemoteDataSource);
-          verify(mockLocalDataSource.getLastHero());
-          expect(result, equals(Right(tHeroModel)));
-        });
-
-        test('should return cachFailure when there is no cached data present',
-            () async {
-          //arrange
-          when(mockLocalDataSource.getLastHero()).thenThrow(CacheException);
-          //act
-          final result = await repository.getHero(tId);
-          //assert
-          verifyZeroInteractions(mockRemoteDataSource);
-          verify(mockLocalDataSource.getLastHero());
-          expect(result, equals(Left(CacheFailure)));
-        });
+      test('should return cachFailure when there is no cached data present',
+          () async {
+        //arrange
+        when(mockLocalDataSource.getLastHero()).thenThrow(CacheException);
+        //act
+        final result = await repository.getHero(tId);
+        //assert
+        verifyZeroInteractions(mockRemoteDataSource);
+        verify(mockLocalDataSource.getLastHero());
+        expect(result, equals(Left(CacheFailure())));
       });
     });
   });
