@@ -21,13 +21,21 @@ class HeroInfoRepositoryImpl implements HeroInfoRepository {
 
   @override
   Future<Either<Failure, Hero>> getHero(String id) async {
-    networkInfo.isConnected;
-    try {
-      final remoteHero = await remoteDataSource.getHero(id);
-      localDataSource.cacheHero(remoteHero);
-      return Right(remoteHero);
-    } on ServerException {
-      return Left(ServerFailure());
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteHero = await remoteDataSource.getHero(id);
+        localDataSource.cacheHero(remoteHero);
+        return Right(remoteHero);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localHero = await localDataSource.getLastHero();
+        Right(localHero);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
     }
   }
 
