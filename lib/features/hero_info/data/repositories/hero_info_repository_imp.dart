@@ -40,8 +40,23 @@ class HeroInfoRepositoryImpl implements HeroInfoRepository {
   }
 
   @override
-  Future<Either<Failure, Hero>> getRandomHero() {
+  Future<Either<Failure, Hero>> getRandomHero() async {
     // TODO: implement listHeroes
-    return null;
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteHero = await remoteDataSource.getRandomHero();
+        localDataSource.cacheHero(remoteHero);
+        return Right(remoteHero);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localHero = await localDataSource.getLastHero();
+        return Right(localHero);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
   }
 }

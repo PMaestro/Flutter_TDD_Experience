@@ -9,5 +9,5 @@ abstract class HeroInfoRemoteDataSource {
   /// Calls the https://superheroapi.com/api/2983597721691728/{character-id} endpoint multiple times.
   ///
   /// Throws a [ServerException] for all error codes.
-  Future<Hero> listHeroes();
+  Future<Hero> getRandomHero();
 }

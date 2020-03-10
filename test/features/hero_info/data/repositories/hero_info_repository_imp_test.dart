@@ -164,4 +164,105 @@ void main() {
       });
     });
   });
+
+  group('getRandomHeroInfo', () {
+    final tHeroModel = HeroModel(
+      response: 'success',
+      id: '100',
+      name: 'Black Flash',
+      imageUrl:
+          'httpss://www.superherodb.com/pictures2/portraits/10/100/639.jpg',
+      appearance: AppearanceModel(
+          eyeColor: "-",
+          hairColor: "-",
+          race: 'God \/ Eternal',
+          gender: 'Male',
+          height: ["-", "0 cm"],
+          weight: ["- lb", "0 kg"]),
+      powerStats: PowerStatsModel(
+        intelligence: '44',
+        power: '100',
+        speed: '100',
+        strength: '10',
+        combat: '30',
+        durability: '80',
+      ),
+    );
+
+    final Hero tHero = tHeroModel;
+
+    runTestOnline(() {
+      test(
+          'should return remote data when the call to remote data source is successeful',
+          () async {
+        //arrange
+        when(mockRemoteDataSource.getRandomHero())
+            .thenAnswer((_) async => tHeroModel);
+        //act
+        final result = await repository.getRandomHero();
+
+        //assert
+        verify(mockRemoteDataSource.getRandomHero());
+        expect(result, equals(Right(tHero)));
+      });
+
+      test(
+          'should cache the data localy when the call to remote data source is successeful',
+          () async {
+        //arrange
+        when(mockRemoteDataSource.getRandomHero())
+            .thenAnswer((_) async => tHeroModel);
+        //act
+        final result = await repository.getRandomHero();
+
+        //assert
+        verify(mockRemoteDataSource.getRandomHero());
+        verify(mockLocalDataSource.cacheHero(tHeroModel));
+      });
+
+      test(
+          'should return server Failure when the call to remote data source is unsuccesseful',
+          () async {
+        //arrange
+        when(mockRemoteDataSource.getRandomHero()).thenThrow(
+            ServerException('Error during comunication with server'));
+        //act
+        final result = await repository.getRandomHero();
+
+        //assert
+        verify(mockRemoteDataSource.getRandomHero());
+        verifyZeroInteractions(mockLocalDataSource);
+        expect(result, equals(Left(ServerFailure())));
+      });
+    });
+
+    runTestOffline(() {
+      test(
+          'should return last locally cached data when the cached data is presented',
+          () async {
+        //arrange
+        when(mockLocalDataSource.getLastHero())
+            .thenAnswer((_) async => tHeroModel);
+        //act
+        final result = await repository.getRandomHero();
+        //assert
+        verifyZeroInteractions(mockRemoteDataSource);
+        verify(mockLocalDataSource.getLastHero());
+        expect(result, equals(Right(tHeroModel)));
+      }); //locally cached
+
+      test('should return CacheFailure when there is no chached data present',
+          () async {
+        //arrange
+        when(mockLocalDataSource.getLastHero())
+            .thenThrow(CacheException('No data cached'));
+        //act
+        final result = await repository.getRandomHero();
+        //assert
+        verifyZeroInteractions(mockRemoteDataSource);
+        verify(mockLocalDataSource.getLastHero());
+        expect(result, equals(Left(CacheFailure())));
+      });
+    });
+  });
 }
