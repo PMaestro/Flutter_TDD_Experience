@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tdd_studing/core/error/exceptions.dart';
 import 'package:tdd_studing/features/hero_info/data/models/hero_model.dart';
 
 abstract class HeroInfoLocalDataSource {
@@ -12,6 +13,8 @@ abstract class HeroInfoLocalDataSource {
   Future<HeroModel> getLastHero();
   Future<void> cacheHero(HeroModel heroToCache);
 }
+
+const CACHED_HERO_INFO = 'CACHED_HERO_INFO';
 
 class HeroInfoLocalDataSourceImpl implements HeroInfoLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -26,7 +29,11 @@ class HeroInfoLocalDataSourceImpl implements HeroInfoLocalDataSource {
 
   @override
   Future<HeroModel> getLastHero() {
-    final jsonString = sharedPreferences.getString('CACHED_HERO_INFO');
-    return Future.value(HeroModel.fromJson(json.decode(jsonString)));
+    final jsonString = sharedPreferences.getString(CACHED_HERO_INFO);
+    if (jsonString != null) {
+      return Future.value(HeroModel.fromJson(json.decode(jsonString)));
+    } else {
+      throw CacheException('No data present on Cache');
+    }
   }
 }
