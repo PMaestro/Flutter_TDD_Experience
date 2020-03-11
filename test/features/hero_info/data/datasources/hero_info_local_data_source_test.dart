@@ -6,7 +6,9 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tdd_studing/core/error/exceptions.dart';
 import 'package:tdd_studing/features/hero_info/data/datasources/hero_info_local_data_source.dart';
+import 'package:tdd_studing/features/hero_info/data/models/appearance_model.dart';
 import 'package:tdd_studing/features/hero_info/data/models/hero_model.dart';
+import 'package:tdd_studing/features/hero_info/data/models/power_stats_model.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -43,6 +45,46 @@ void main() {
       final call = dataSource.getLastHero;
 
       expect(() => call(), throwsA(TypeMatcher<CacheException>()));
+    });
+  });
+
+  group('cacheHeroInfo', () {
+    final tHeroModel = HeroModel(
+      response: 'success',
+      id: '70',
+      name: 'Batman',
+      imageUrl:
+          'httpss://www.superherodb.com/pictures2/portraits/10/100/639.jpg',
+      appearance: AppearanceModel(
+          eyeColor: 'blue',
+          hairColor: 'black',
+          race: 'Human',
+          gender: 'Male',
+          height: [
+            "210 lb",
+            "95 kg",
+          ],
+          weight: [
+            "6'2",
+            "188 cm",
+          ]),
+      powerStats: PowerStatsModel(
+        intelligence: '100',
+        power: '47',
+        speed: '27',
+        strength: '26',
+        combat: '100',
+        durability: '50',
+      ),
+    );
+
+    test('should call SharedPreferences to cache the data', () async {
+      //act
+      dataSource.cacheHero(tHeroModel);
+      //assert
+      final expectedJsonString = json.encode(tHeroModel.toJson());
+      verify(mockSharedPreferences.setString(
+          CACHED_HERO_INFO, expectedJsonString));
     });
   });
 }
