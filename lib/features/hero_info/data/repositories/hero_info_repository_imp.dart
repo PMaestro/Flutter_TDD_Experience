@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:tdd_studing/core/error/exceptions.dart';
 import 'package:tdd_studing/core/error/failures.dart';
-import 'package:tdd_studing/core/platform/network_info.dart';
+import 'package:tdd_studing/core/network/network_info.dart';
 import 'package:tdd_studing/features/hero_info/data/datasources/hero_info_local_data_source.dart';
 import 'package:tdd_studing/features/hero_info/data/datasources/hero_info_remote_data_source.dart';
 import 'package:tdd_studing/features/hero_info/data/models/hero_model.dart';
