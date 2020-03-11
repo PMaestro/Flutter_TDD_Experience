@@ -148,12 +148,13 @@ void main() {
         verifyZeroInteractions(mockRemoteDataSource);
         verify(mockLocalDataSource.getLastHero());
         expect(result, equals(Right(tHeroModel)));
-      });
+      }); //locally cached
 
-      test('should return cachFailure when there is no cached data present',
+      test('should return CacheFailure when there is no chached data present',
           () async {
         //arrange
-        when(mockLocalDataSource.getLastHero()).thenThrow(CacheException);
+        when(mockLocalDataSource.getLastHero())
+            .thenThrow(CacheException('No data cached'));
         //act
         final result = await repository.getHero(tId);
         //assert
