@@ -20,12 +20,12 @@ abstract class HeroInfoRemoteDataSource {
 
 class HeroInfoRemoteDataSourceImpl implements HeroInfoRemoteDataSource {
   final http.Client client;
-
+  final _url = 'https://superheroapi.com/api/2983597721691728/';
   HeroInfoRemoteDataSourceImpl({@required this.client});
 
-  getConcreteOrRandomHeroInfo(String id) async {
+  getConcreteOrRandomHeroInfo(String id, String url) async {
     final response = await client.get(
-      'https://superheroapi.com/api/2983597721691728/$id',
+      '$_url$id',
       headers: {
         'Content-Type:': 'application/json',
       },
@@ -40,12 +40,12 @@ class HeroInfoRemoteDataSourceImpl implements HeroInfoRemoteDataSource {
 
   @override
   Future<HeroModel> getHero(String id) async {
-    return await getConcreteOrRandomHeroInfo(id);
+    return await getConcreteOrRandomHeroInfo(id, _url);
   }
 
   @override
   Future<HeroModel> getRandomHero() async {
     int randomId = Random().nextInt(731);
-    return await getConcreteOrRandomHeroInfo(randomId.toString());
+    return await getConcreteOrRandomHeroInfo(randomId.toString(), _url);
   }
 }
