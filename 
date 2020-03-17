@@ -1,0 +1,141 @@
+[33mcommit 180cfaddb4f456e7fdba5d97fe2c88f722d844ae[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Wed Mar 11 17:53:35 2020 -0300
+
+    adding remoteHeroInfoDataSource test and implementations, but 1 method needs futher implementation
+
+[33mcommit cbe38d0bfa224bb6920f791b6b3998b66d6ab068[m
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Wed Mar 11 11:55:57 2020 -0300
+
+    add test for if there is no cached data and implemented its behavior
+
+[33mcommit dc3732b86a5e1c6f0fbc5dabca4d6a2f3ef91b1d[m
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Wed Mar 11 11:35:26 2020 -0300
+
+    adding test to getLastHeroInfo using sharedPreferences
+
+[33mcommit dd72ec88a68c263d0f07ad1fa3120f3215c35df7[m
+Merge: e3c02c3 c7b8cf4
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Wed Mar 11 09:49:01 2020 -0300
+
+    Merge branch 'master' of github.com:PMaestro/Flutter_TDD_Experience
+
+[33mcommit c7b8cf4efdab12eec459423b8b1ec01f188d0e7d[m
+Merge: 1727e01 38ba62d
+Author: Eric Maxwell de Souza Farias <max.souza_@hotmail.com>
+Date:   Wed Mar 11 09:41:35 2020 -0300
+
+    Merge pull request #1 from PMaestro/failure_test
+    
+    merge
+
+[33mcommit 1727e0128ec67623028829c48226e1a7e2ed442e[m
+Author: Eric Maxwell de Souza Farias <max.souza_@hotmail.com>
+Date:   Wed Mar 11 09:39:15 2020 -0300
+
+    Update README.md
+
+[33mcommit e3c02c3f0f48e2d66ca511130fce280aed1c873c[m[33m ([m[1;32mfailure_test[m[33m)[m
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Wed Mar 11 09:23:37 2020 -0300
+
+    Adding network_info and its test to make sure we have connection
+
+[33mcommit 72fa35cac9bf4d5a3b73a73a6ce79d2de5a619e9[m
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Tue Mar 10 18:01:49 2020 -0300
+
+    Refactoring hero_info_repository_imp to make it clean and elegant
+
+[33mcommit f04266eb8b471c707a91f7dafe57a5695920363d[m
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Tue Mar 10 16:59:35 2020 -0300
+
+    adding test to get randomHero without really creating the get random number to get a rondom id
+
+[33mcommit 38ba62d23c71ff2093d71b86ddaaa02da3af065e[m[33m ([m[1;31morigin/failure_test[m[33m)[m
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Tue Mar 10 14:49:40 2020 -0300
+
+    test
+
+[33mcommit fbeb8b10bed1d0ef95391d5f7d840fb96cf686ff[m
+Merge: b034c85 b9c3a71
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Tue Mar 10 09:25:07 2020 -0300
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       test/features/hero_info/data/repositories/hero_info_repository_imp_test.dart
+
+[33mcommit b034c85a8a211e0530f97f9e0816ac4f5a11806f[m
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Mon Mar 9 17:58:33 2020 -0300
+
+    adding test for when you get data from local storage and for when it fail too
+    
+    Signed-off-by: Eric Maxwell <max.souza_@hotmail.com>
+
+[33mcommit b9c3a71ae65552cbc49135a7fa5225b5ad5120aa[m
+Author: Eric Maxwell <max.souza_@hotmail.com>
+Date:   Mon Mar 9 17:58:33 2020 -0300
+
+    adding test for when you get data from local storage and for when it fail too
+
+[33mcommit bca98dc8d0ccbc8ec3c89492cd45886a73b8f791[m
+Author: emilsonsilva <emilsongyn17@gmail.com>
+Date:   Mon Mar 9 17:30:14 2020 -0300
+
+    add test for when a hero is failure happens during the comunication with the server
+
+[33mcommit 12f176033a6350a566f68b6bad8924a7612a5a26[m
+Author: emilsonsilva <emilsongyn17@gmail.com>
+Date:   Mon Mar 9 16:46:52 2020 -0300
+
+    Adding network and local repositories abstract classes and the corresponding tests
+
+[33mcommit 31b46a2e6cde612dfacd4bfc87cb715de83eff25[m
+Author: emilsonsilva <emilsongyn17@gmail.com>
+Date:   Mon Mar 9 09:43:53 2020 -0300
+
+    adding toJson test and implementing it on all models, maybe its not necessary to have it on the entities to override it on the model, later on i will test
+
+[33mcommit 223ce8c94e5a93293bc2261f9f4a6f6bc1e88502[m
+Author: emilsonsilva <emilsongyn17@gmail.com>
+Date:   Fri Mar 6 18:42:05 2020 -0300
+
+    Resolved the test error, the cause of the error was the lack of the super method in the Appearance class
+
+[33mcommit 1345460b159017998020892173560aaf504ae584[m
+Author: emilsonsilva <emilsongyn17@gmail.com>
+Date:   Fri Mar 6 18:23:19 2020 -0300
+
+    has a error on heroModel test even if the return is from the expected type
+
+[33mcommit cef3ad24919e85fbecf4c2d685099aa9393e6721[m
+Author: emilsonsilva <emilsongyn17@gmail.com>
+Date:   Fri Mar 6 11:58:11 2020 -0300
+
+    Restruturing the class name of get_list_heroes_test to get_hero_test, becouse that was what its test and created get_list_heroes_test that actually get a list of heroes not just a single hero based on its id
+
+[33mcommit 279035644a2ccbca3368c581bb95e1ba99b26853[m
+Author: emilsonsilva <emilsongyn17@gmail.com>
+Date:   Fri Mar 6 09:19:07 2020 -0300
+
+    refactoring the test and production code method to use call instead of execute
+
+[33mcommit 92fc67fb9039d11607145f37f2cc78967e636f86[m
+Author: emilsonsilva <emilsongyn17@gmail.com>
+Date:   Fri Mar 6 09:05:39 2020 -0300
+
+    Creating the hero, powerstats and appearenc tables, creating heroInfoRepository, creating the get_info_of_heroes method and adding first unit test,
+
+[33mcommit 60cfdfcb76954ea1804c22caa9f61319bfcbfeeb[m
+Author: emilsonsilva <emilsongyn17@gmail.com>
+Date:   Thu Mar 5 14:07:19 2020 -0300
+
+    first commit
