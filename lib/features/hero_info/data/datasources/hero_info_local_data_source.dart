@@ -23,8 +23,10 @@ class HeroInfoLocalDataSourceImpl implements HeroInfoLocalDataSource {
 
   @override
   Future<void> cacheHero(HeroModel heroToCache) {
-    // TODO: implement cacheHero
-    return null;
+    return sharedPreferences.setString(
+      CACHED_HERO_INFO,
+      json.encode(heroToCache.toJson()),
+    );
   }
 
   @override
