@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:tdd_studing/core/error/failures.dart';
 import 'package:tdd_studing/core/util/input_converter.dart';
+import 'package:tdd_studing/features/hero_info/domain/entities/hero.dart';
 import 'package:tdd_studing/features/hero_info/domain/usecases/get_hero.dart';
 import 'package:tdd_studing/features/hero_info/domain/usecases/get_list_of_heroes.dart';
 
@@ -49,19 +51,22 @@ class HeroInfoBloc extends Bloc<HeroInfoEvent, HeroInfoState> {
         yield Loading();
         final failureOrHero =
             await getHeroById(Params(heroId: integer.toString()));
-        yield failureOrHero.fold(
-          (failure) => Error(message: _mapFailureToMessage(failure)),
-          (hero) => Loaded(hero: hero),
-        );
+        yield* _eitherLoadedOrErrorState(failureOrHero);
       });
     } else if (event is GetHeroForRandomId) {
       yield Loading();
       final failureOrHero = await getRandomHero(NoParams());
-      yield failureOrHero.fold(
-        (failure) => Error(message: _mapFailureToMessage(failure)),
-        (hero) => Loaded(hero: hero),
-      );
+      yield* _eitherLoadedOrErrorState(failureOrHero);
     }
+  }
+
+  Stream<HeroInfoState> _eitherLoadedOrErrorState(
+    Either<Failure, Hero> failureOrHero,
+  ) async* {
+    yield failureOrHero.fold(
+      (failure) => Error(message: _mapFailureToMessage(failure)),
+      (hero) => Loaded(hero: hero),
+    );
   }
 
   String _mapFailureToMessage(Failure failure) {
