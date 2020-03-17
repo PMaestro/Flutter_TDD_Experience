@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:tdd_studing/core/error/failures.dart';
 import 'package:tdd_studing/core/util/input_converter.dart';
 import 'package:tdd_studing/features/hero_info/domain/entities/appearance.dart';
 import 'package:tdd_studing/features/hero_info/domain/entities/hero.dart';
@@ -68,12 +69,16 @@ void main() {
       ),
     );
 
+    void setUpMockInputConverterSuccess() {
+      when(mockInputConverter.stringToUnsignedInterger(any))
+          .thenReturn(Right(tNumberParsed));
+    }
+
     test(
         'should call the inputConverted to validade and convert the string to a unsigned interger',
         () async {
       //arrange
-      when(mockInputConverter.stringToUnsignedInterger(any))
-          .thenReturn(Right(tNumberParsed));
+      setUpMockInputConverterSuccess();
       //act
       bloc.dispatch(GetHeroForExplicitId(tIdString));
       await untilCalled(mockInputConverter.stringToUnsignedInterger((any)));
@@ -85,7 +90,6 @@ void main() {
       //arrange
       when(mockInputConverter.stringToUnsignedInterger(any))
           .thenReturn(Left(InvalidInputFailure()));
-
       //assert later
       final expected = [
         Empty(),
@@ -95,6 +99,156 @@ void main() {
 
       //act
       bloc.dispatch(GetHeroForExplicitId(tIdString));
+    });
+
+    test('should get data from the concrete use case', () async {
+      //arrange
+      setUpMockInputConverterSuccess();
+      when(mockGetHeroInfo(any)).thenAnswer((_) async => Right(tHero));
+      //act
+      bloc.dispatch(GetHeroForExplicitId(tIdString));
+      await untilCalled(mockGetHeroInfo(any));
+      //assert
+      verify(mockGetHeroInfo(Params(heroId: tNumberParsed.toString())));
+    });
+
+    test('should emit [loading, loaded] when data is gotten successfully ',
+        () async {
+      //arrange
+      setUpMockInputConverterSuccess();
+      when(mockGetHeroInfo(any)).thenAnswer((_) async => Right(tHero));
+      //assert later
+      final expected = [
+        Empty(),
+        Loading(),
+        Loaded(hero: tHero),
+      ];
+      expectLater(bloc.state, emitsInOrder(expected));
+      //act
+      bloc.dispatch(GetHeroForExplicitId(tIdString));
+    });
+
+    test('should emit [loading, Error] when getting data fails ', () async {
+      //arrange
+      setUpMockInputConverterSuccess();
+      when(mockGetHeroInfo(any)).thenAnswer((_) async => Left(ServerFailure()));
+      //assert later
+      final expected = [
+        Empty(),
+        Loading(),
+        Error(message: SERVER_FAILURE_MESSAGE),
+      ];
+      expectLater(bloc.state, emitsInOrder(expected));
+      //act
+      bloc.dispatch(GetHeroForExplicitId(tIdString));
+    });
+
+    test(
+        'should emit [loading, Error] with a proper message for the error when '
+        'getting data fails', () async {
+      //arrange
+      setUpMockInputConverterSuccess();
+      when(mockGetHeroInfo(any)).thenAnswer((_) async => Left(CacheFailure()));
+      //assert later
+      final expected = [
+        Empty(),
+        Loading(),
+        Error(message: CACHE_FAILURE_MESSAGE),
+      ];
+      expectLater(bloc.state, emitsInOrder(expected));
+      //act
+      bloc.dispatch(GetHeroForExplicitId(tIdString));
+    });
+  });
+
+  group('GetRandomHero', () {
+    final tHero = Hero(
+      response: 'success',
+      id: '70',
+      name: 'Batman',
+      imageUrl:
+          'httpss://www.superherodb.com/pictures2/portraits/10/100/639.jpg',
+      appearance: Appearance(
+          eyeColor: 'blue',
+          hairColor: 'black',
+          race: 'Human',
+          gender: 'Male',
+          height: [
+            "210 lb",
+            "95 kg",
+          ],
+          weight: [
+            "6'2",
+            "188 cm",
+          ]),
+      powerStats: PowerStats(
+        intelligence: '100',
+        power: '47',
+        speed: '27',
+        strength: '26',
+        combat: '100',
+        durability: '50',
+      ),
+    );
+
+    test('should get data from the random usecase', () async {
+      //arrange
+
+      when(mockGetRandomHero(any)).thenAnswer((_) async => Right(tHero));
+      //act
+      bloc.dispatch(GetHeroForRandomId());
+      await untilCalled(mockGetRandomHero(any));
+      //assert
+      verify(mockGetRandomHero(NoParams()));
+    });
+
+    test('should emit [loading, loaded] when data is gotten successfully ',
+        () async {
+      //arrange
+      when(mockGetRandomHero(any)).thenAnswer((_) async => Right(tHero));
+      //assert later
+      final expected = [
+        Empty(),
+        Loading(),
+        Loaded(hero: tHero),
+      ];
+      expectLater(bloc.state, emitsInOrder(expected));
+      //act
+      bloc.dispatch(GetHeroForRandomId());
+    });
+
+    test('should emit [loading, Error] when getting data fails ', () async {
+      //arrange
+
+      when(mockGetRandomHero(any))
+          .thenAnswer((_) async => Left(ServerFailure()));
+      //assert later
+      final expected = [
+        Empty(),
+        Loading(),
+        Error(message: SERVER_FAILURE_MESSAGE),
+      ];
+      expectLater(bloc.state, emitsInOrder(expected));
+      //act
+      bloc.dispatch(GetHeroForRandomId());
+    });
+
+    test(
+        'should emit [loading, Error] with a proper message for the error when '
+        'getting data fails', () async {
+      //arrange
+
+      when(mockGetRandomHero(any))
+          .thenAnswer((_) async => Left(CacheFailure()));
+      //assert later
+      final expected = [
+        Empty(),
+        Loading(),
+        Error(message: CACHE_FAILURE_MESSAGE),
+      ];
+      bloc.dispatch(GetHeroForRandomId());
+      expectLater(bloc.state, emitsInOrder(expected));
+      //act
     });
   });
 }
